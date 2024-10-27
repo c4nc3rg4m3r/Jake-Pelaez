@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crossfire eCoin Market</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Crossfire eCoin Market</h1>
+  </header>
+  <div class="market-container">
+    <h2>Select Your eCoins Package</h2>
+    <div class="products">
+      <div class="product" data-price="5" onclick="addToCart('500 eCoins', 5)">
+        <h3>500 eCoins</h3>
+        <p>Price: $5.00</p>
+        <button>Add to Cart</button>
+      </div>
+      <div class="product" data-price="10" onclick="addToCart('1000 eCoins', 10)">
+        <h3>1000 eCoins</h3>
+        <p>Price: $10.00</p>
+        <button>Add to Cart</button>
+      </div>
+      <div class="product" data-price="20" onclick="addToCart('2000 eCoins', 20)">
+        <h3>2000 eCoins</h3>
+        <p>Price: $20.00</p>
+        <button>Add to Cart</button>
+      </div>
+      <div class="product" data-price="50" onclick="addToCart('5000 eCoins', 50)">
+        <h3>5000 eCoins</h3>
+        <p>Price: $50.00</p>
+        <button>Add to Cart</button>
+      </div>
+    </div>
+    <div class="cart">
+      <h3>Shopping Cart</h3>
+      <ul id="cart-list"></ul>
+      <p id="total-price">Total: $0.00</p>
+      <button class="checkout-button" onclick="openPaymentModal()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Full-screen Payment Method Modal -->
+  <div id="payment-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePaymentModal()">&times;</span>
+      <h2>Choose Your Payment Method</h2>
+      <button class="payment-option" onclick="processPayment('GCash')">Pay with GCash</button>
+      <button class="payment-option" onclick="processPayment('PayMaya')">Pay with PayMaya</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+<style>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #00203f, #ad1457);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: #fff;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.market-container {
+  width: 90%;
+  max-width: 800px;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #333;
+}
+
+.market-container h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.product {
+  padding: 1.5rem;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.product h3 {
+  font-size: 1.2rem;
+  color: #0056b3;
+  margin-bottom: 0.5rem;
+}
+
+.product p {
+  color: #666;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.cart {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+#cart-list {
+  list-style: none;
+  margin: 1rem 0;
+}
+
+#total-price {
+  font-weight: bold;
+  color: #333;
+  margin-top: 1rem;
+}
+
+.checkout-button {
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.checkout-button:hover {
+  background-color: #218838;
+}
+
+/* Modal Styling */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  background-color: #f4f4f4;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-content h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.payment-option {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.payment-option:hover {
+  background-color: #0056b3;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .products {
+    grid-template-columns: 1fr;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+}</style><script>let cart = [];
+let total = 0;
+
+function addToCart(name, price) {
+  cart.push({ name, price });
+  total += price;
+  updateCart();
+}
+
+function updateCart() {
+  const cartList = document.getElementById("cart-list");
+  const totalPrice = document.getElementById("total-price");
+  
+  cartList.innerHTML = "";
+  cart.forEach(item => {
+    const listItem = document.createElement("li");
+    listItem.textContent = `${item.name} - ${item.price.toFixed(2)}`;
+    cartList.appendChild(listItem);
+  });
+  
+  totalPrice.textContent = `Total: ${total.toFixed(2)}`;
+}
+
+function openPaymentModal() {
+  if (cart.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+  
+  document.getElementById("payment-modal").style.display = "flex";
+}
+
+function closePaymentModal() {
+  document.getElementById("payment-modal").style.display = "none";
+}
+
+function processPayment(method) {
+  closePaymentModal();
+  alert(`Payment processed with ${method}. Total: ${total.toFixed(2)}`);
+  
+  cart = [];
+  total = 0;
+  updateCart();
+}</script></html>
